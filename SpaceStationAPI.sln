@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceStationAPI", "SpaceStationAPI.csproj", "{C05C3C12-3885-44FF-B7CC-2794471FD798}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C05C3C12-3885-44FF-B7CC-2794471FD798}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C05C3C12-3885-44FF-B7CC-2794471FD798}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C05C3C12-3885-44FF-B7CC-2794471FD798}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C05C3C12-3885-44FF-B7CC-2794471FD798}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EAFFE601-8F07-43D3-9588-44D5F081CC1E}
+	EndGlobalSection
+EndGlobal
