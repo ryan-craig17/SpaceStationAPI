@@ -1,3 +1,6 @@
+using SpaceStationAPI.DataLayer;
+using SpaceStationAPI.Interfaces;
+using SpaceStationAPI.LogicLayer;
 using SpaceStationAPI.Models;
 
 namespace SpaceStationAPI
@@ -12,7 +15,10 @@ namespace SpaceStationAPI
 
             builder.Services.AddControllers();
             builder.Services.Configure<Settings>(builder.Configuration.GetSection("Settings"));
-            
+
+            builder.Services.AddScoped<INasaLogic, NasaLogic>();
+            builder.Services.AddScoped<IRestWorker, RestWorker>();
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
