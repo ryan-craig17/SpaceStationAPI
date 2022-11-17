@@ -13,7 +13,7 @@ namespace SpaceStationAPI
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
             builder.Services.Configure<Settings>(builder.Configuration.GetSection("Settings"));
 
             builder.Services.AddScoped<INasaLogic, NasaLogic>();

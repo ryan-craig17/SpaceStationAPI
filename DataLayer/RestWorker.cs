@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using SpaceStationAPI.Interfaces;
-using SpaceStationAPI.Models.Domain;
+using SpaceStationAPI.Models;
 
 namespace SpaceStationAPI.DataLayer
 {
@@ -45,6 +45,7 @@ namespace SpaceStationAPI.DataLayer
 
                 result = JsonSerializer.Deserialize<T>(resultData);
                 result.StatusCode = response.StatusCode;
+                result.IsErrorResponse = !response.IsSuccessStatusCode;
             }
 
             return result;

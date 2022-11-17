@@ -2,6 +2,8 @@
 using SpaceStationAPI.Interfaces;
 using SpaceStationAPI.Models;
 using SpaceStationAPI.Models.Domain;
+using SpaceStationAPI.Models.View;
+using SpaceStationAPI.Transforms;
 
 namespace SpaceStationAPI.LogicLayer
 {
@@ -21,13 +23,13 @@ namespace SpaceStationAPI.LogicLayer
             apiKey_Nasa = _settings.EnvironmentValues.APIkey_NASA;
         }
 
-        public async Task<Uri> GetAstronomyPictureURL(DateTime? pictureDate)
+        public async Task<AstroPictureView> GetAstronomyPictureURL(DateTime? pictureDate)
         {
             var wsURL_path = string.Format(_settings.StaticValues.NasaResources.APOD, $"{pictureDate:yyyy-MM-dd}", apiKey_Nasa);
             var url = new Uri(new Uri(wsURL_domain), wsURL_path);
 
             var response = await _restWorker.CallService<AstroPicture>(url);
-            var result = new Uri(response?.url);
+            var result = NasaTransformer.DomainToView(response);
 
             return result;
         }

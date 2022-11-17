@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace SpaceStationAPI.Models.Domain
+namespace SpaceStationAPI.Models
 {
     public class BaseResponse
     {

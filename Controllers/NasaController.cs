@@ -3,7 +3,9 @@ using Microsoft.Extensions.Options;
 using SpaceStationAPI.Interfaces;
 using SpaceStationAPI.Models;
 using System.Net;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 
 namespace SpaceStationAPI.Controllers
 {
@@ -20,43 +22,42 @@ namespace SpaceStationAPI.Controllers
             _nasaLogic = nasaLogic;
         }
 
-        // GET: api/<NasaController>
         [HttpGet]
-        [Route("astro-picture")]
+        [Route("astronomy-picture")]
         public async Task<IActionResult> GetAPOD(DateTime? pictureDate)
         {
-            var picURL = await _nasaLogic.GetAstronomyPictureURL(pictureDate);
+            var picture = await _nasaLogic.GetAstronomyPictureURL(pictureDate);
+            var resultCode = (int)(picture?.StatusCode ?? HttpStatusCode.InternalServerError);
 
-            return await Task.FromResult<IActionResult>(StatusCode((int)HttpStatusCode.OK, picURL));
+            return await Task.FromResult<IActionResult>(StatusCode(resultCode, picture));
         }
 
-        // GET api/<NasaController>/5
         [HttpGet]
-        [Route("{id}")]
-        public string Get(int id)
+        [Route("asteroid-list")]
+        public string GetAsteroidList(DateTime? startDate)
         {
-            if (id == 420)
-                return JsonSerializer.Serialize(_settings, new JsonSerializerOptions { WriteIndented = true });
-
-            return $"id is {id}";
+            return $"startDate is {startDate:yyyy-MM-dd}";
         }
 
-        // POST api/<NasaController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpGet]
+        [Route("asteroid-lookup")]
+        public string GetAsteroidLookup(int id)
         {
+            return $"asteroid id is {id}";
         }
 
-        // PUT api/<NasaController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpGet]
+        [Route("asteroid-browse")]
+        public string BrowseAsteroids()
         {
+            return "ok";
         }
 
-        // DELETE api/<NasaController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpGet]
+        [Route("mars-rover-photo")]
+        public string GetMarsRoverPhoto(DateTime? earthDate)
         {
+            return $"earth date is {earthDate}";
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using SpaceStationAPI.DataLayer;
-using SpaceStationAPI.Models.Domain;
+using SpaceStationAPI.Models;
 using System.Collections.Specialized;
 
 namespace SpaceStationAPI.Interfaces
