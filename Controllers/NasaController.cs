@@ -55,9 +55,12 @@ namespace SpaceStationAPI.Controllers
 
         [HttpGet]
         [Route("mars-rover-photo")]
-        public string GetMarsRoverPhoto(DateTime? earthDate)
+        public async Task<IActionResult> GetMarsRoverPhoto(DateTime? earthDate)
         {
-            return $"earth date is {earthDate}";
+            var photo = await _nasaLogic.GetMarsRoverPhotos(earthDate);
+            var resultCode = (int)(photo?.StatusCode ?? HttpStatusCode.InternalServerError);
+
+            return await Task.FromResult<IActionResult>(StatusCode(resultCode, photo));
         }
     }
 }

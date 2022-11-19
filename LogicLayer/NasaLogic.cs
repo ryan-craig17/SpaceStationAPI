@@ -33,5 +33,17 @@ namespace SpaceStationAPI.LogicLayer
 
             return result;
         }
+
+        public async Task<MarsRoverPhotoView> GetMarsRoverPhotos(DateTime? earthDate)
+        {
+            var photoDate = earthDate ?? DateTime.UtcNow;
+            var wsURL_path = string.Format(_settings.StaticValues.NasaResources.MarsRoverPhotos, $"{photoDate:yyyy-MM-dd}", apiKey_Nasa);
+            var url = new Uri(new Uri(wsURL_domain), wsURL_path);
+
+            var response = await _restWorker.CallService<MarsRoverPhotos>(url);
+            var result = NasaTransformer.DomainToView(response);
+
+            return result;
+        }
     }
 }
