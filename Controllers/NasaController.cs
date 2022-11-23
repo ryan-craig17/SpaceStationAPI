@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using SpaceStationAPI.Interfaces;
 using SpaceStationAPI.Models;
+using SpaceStationAPI.Models.View;
 using System.Net;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -13,17 +14,16 @@ namespace SpaceStationAPI.Controllers
     [ApiController]
     public class NasaController : ControllerBase
     {
-        private Settings _settings { get; set; }
         private INasaLogic _nasaLogic { get; set; }
 
-        public NasaController(IOptions<Settings> settings, INasaLogic nasaLogic)
+        public NasaController(INasaLogic nasaLogic)
         {
-            _settings = settings.Value;
             _nasaLogic = nasaLogic;
         }
 
         [HttpGet]
         [Route("astronomy-picture")]
+        [Produces("application/json", Type = typeof(AstroPictureView))]
         public async Task<IActionResult> GetAPOD(DateTime? pictureDate)
         {
             var picture = await _nasaLogic.GetAstronomyPictureURL(pictureDate);
@@ -33,28 +33,30 @@ namespace SpaceStationAPI.Controllers
         }
 
         [HttpGet]
-        [Route("asteroid-list")]
-        public string GetAsteroidList(DateTime? startDate)
-        {
-            return $"startDate is {startDate:yyyy-MM-dd}";
-        }
-
-        [HttpGet]
         [Route("asteroid-lookup")]
-        public string GetAsteroidLookup(int id)
+        [Produces("application/json", Type = typeof(NearEarthObjectView))]
+        public async Task<IActionResult> GetAsteroidLookup(int id)
         {
-            return $"asteroid id is {id}";
+            var neo = await _nasaLogic.GetNearEarthObject(id);
+            var resultCode= (int)(neo?.StatusCode ?? HttpStatusCode.InternalServerError);
+
+            return await Task.FromResult<IActionResult>(StatusCode(resultCode, neo));
         }
 
         [HttpGet]
         [Route("asteroid-browse")]
-        public string BrowseAsteroids()
+        [Produces("application/json", Type = typeof(NearEarthObjectListView))]
+        public async Task<IActionResult> BrowseAsteroids(int pageNumber = 0, int pageSize = 20)
         {
-            return "ok";
+            var browse = await _nasaLogic.BrowseNearEarthObjects(pageNumber, pageSize);
+            var resultCode = (int)(browse?.StatusCode ?? HttpStatusCode.InternalServerError);
+
+            return await Task.FromResult<IActionResult>(StatusCode(resultCode, browse));
         }
 
         [HttpGet]
         [Route("mars-rover-photo")]
+        [Produces("application/json", Type = typeof(MarsRoverPhotoView))]
         public async Task<IActionResult> GetMarsRoverPhoto(DateTime? earthDate)
         {
             var photo = await _nasaLogic.GetMarsRoverPhotos(earthDate);

@@ -1,4 +1,5 @@
-﻿using SpaceStationAPI.Models.View;
+﻿using SpaceStationAPI.Models.Domain;
+using SpaceStationAPI.Models.View;
 
 namespace SpaceStationAPI.Interfaces
 {
@@ -6,5 +7,7 @@ namespace SpaceStationAPI.Interfaces
     {
         public Task<AstroPictureView> GetAstronomyPictureURL(DateTime? pictureDate);
         public Task<MarsRoverPhotoView> GetMarsRoverPhotos(DateTime? earthDate);
+        public Task<NearEarthObjectView> GetNearEarthObject(int id);
+        public Task<NearEarthObjectListView> BrowseNearEarthObjects(int pageNumber, int pageSize);
     }
 }

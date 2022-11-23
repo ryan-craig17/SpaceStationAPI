@@ -45,5 +45,28 @@ namespace SpaceStationAPI.LogicLayer
 
             return result;
         }
+
+        public async Task<NearEarthObjectView> GetNearEarthObject(int id)
+        {
+            var wsURL_path = string.Format(_settings.StaticValues.NasaResources.AsteroidLookup, id, apiKey_Nasa);
+            var url = new Uri(new Uri(wsURL_domain), wsURL_path);
+
+            var response = await _restWorker.CallService<NearEarthObject>(url);
+            var result = NasaTransformer.DomainToView(response);
+
+            return result;
+        }
+
+        public async Task<NearEarthObjectListView> BrowseNearEarthObjects(int pageNumber, int pageSize)
+        {
+            var wsURL_path = string.Format(_settings.StaticValues.NasaResources.AsteroidBrowse, pageNumber, pageSize, apiKey_Nasa);
+            var url = new Uri(new Uri(wsURL_domain), wsURL_path);
+
+            var response = await _restWorker.CallService<NearEarthObjectList>(url);
+            var result = NasaTransformer.DomainToView(response);
+
+            return result;
+
+        }
     }
 }

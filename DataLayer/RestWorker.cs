@@ -18,7 +18,7 @@ namespace SpaceStationAPI.DataLayer
     {
         private static readonly HttpClient httpClient = new HttpClient();
 
-        public async Task<T> CallService<T>(Uri wsURL, HttpVerb httpVerb = HttpVerb.Get, object data = null, NameValueCollection headerData = null) where T : BaseResponse
+        public async Task<T> CallService<T>(Uri wsURL, HttpVerb httpVerb = HttpVerb.Get, object data = null, NameValueCollection headerData = null) where T : BaseResponse, new()
         {
             T result = default;
             StringContent _content = null;
@@ -43,7 +43,11 @@ namespace SpaceStationAPI.DataLayer
             {
                 var resultData = await response.Content.ReadAsStringAsync();
 
-                result = JsonSerializer.Deserialize<T>(resultData);
+                if (string.IsNullOrEmpty(resultData))
+                    result = new T();
+                else
+                    result = JsonSerializer.Deserialize<T>(resultData);
+
                 result.StatusCode = response.StatusCode;
                 result.IsErrorResponse = !response.IsSuccessStatusCode;
             }
