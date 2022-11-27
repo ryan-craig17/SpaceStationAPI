@@ -1,5 +1,4 @@
-﻿using SpaceStationAPI.Models.Domain;
-using SpaceStationAPI.Models.View;
+﻿using SpaceStationAPI.Models.View;
 
 namespace SpaceStationAPI.Interfaces
 {

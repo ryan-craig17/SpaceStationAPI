@@ -17,6 +17,7 @@ namespace SpaceStationAPI
             builder.Services.Configure<Settings>(builder.Configuration.GetSection("Settings"));
 
             builder.Services.AddScoped<INasaLogic, NasaLogic>();
+            builder.Services.AddScoped<IStarWarsLogic, StarWarsLogic>();
             builder.Services.AddScoped<IRestWorker, RestWorker>();
 
             builder.Services.AddEndpointsApiExplorer();
