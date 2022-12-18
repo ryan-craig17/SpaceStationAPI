@@ -12,7 +12,6 @@ namespace SpaceStationAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
             builder.Services.Configure<Settings>(builder.Configuration.GetSection("Settings"));
 

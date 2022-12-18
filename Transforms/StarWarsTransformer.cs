@@ -1,4 +1,5 @@
-﻿using SpaceStationAPI.Models.Domain;
+﻿using SpaceStationAPI.Extensions;
+using SpaceStationAPI.Models.Domain;
 using SpaceStationAPI.Models.View;
 
 namespace SpaceStationAPI.Transforms
@@ -31,7 +32,7 @@ namespace SpaceStationAPI.Transforms
                 StatusCode = starWarsFilms.StatusCode,
             };
 
-            foreach(var item in starWarsFilms.results ?? Enumerable.Empty<StarWarsFilm>())
+            foreach(var item in starWarsFilms.results.OrEmptyIfNull())
                 filmView.StarWarsFilms.Add(GetFilmItem(item));
 
             return filmView;
@@ -63,7 +64,7 @@ namespace SpaceStationAPI.Transforms
                 StatusCode = starWarsPeople.StatusCode
             };
 
-            foreach (var item in starWarsPeople.results ?? Enumerable.Empty<StarWarsPerson>())
+            foreach (var item in starWarsPeople.results.OrEmptyIfNull())
                 peopleView.StarWarsPeople.Add(GetPersonItem(item));
 
             return peopleView;
@@ -96,19 +97,19 @@ namespace SpaceStationAPI.Transforms
                 Url = Uri.TryCreate(starWarsFilm.url, UriKind.Absolute, out var filmURL) ? filmURL : null
             };
 
-            foreach (var url in starWarsFilm.characters ?? Enumerable.Empty<string>())
+            foreach (var url in starWarsFilm.characters.OrEmptyIfNull())
                 filmItem.Characters.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsFilm.planets ?? Enumerable.Empty<string>())
+            foreach (var url in starWarsFilm.planets.OrEmptyIfNull())
                 filmItem.Planets.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsFilm.species ?? Enumerable.Empty<string>())
+            foreach (var url in starWarsFilm.species.OrEmptyIfNull())
                 filmItem.Species.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsFilm.starships ?? Enumerable.Empty<string>())
+            foreach (var url in starWarsFilm.starships.OrEmptyIfNull())
                 filmItem.Starships.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsFilm.vehicles ?? Enumerable.Empty<string>())
+            foreach (var url in starWarsFilm.vehicles.OrEmptyIfNull())
                 filmItem.Vehicles.Add(GetIdFromURL(url));
 
             return filmItem;
@@ -133,16 +134,16 @@ namespace SpaceStationAPI.Transforms
                 Url = Uri.TryCreate(starWarsPerson.url, UriKind.Absolute, out var personURL) ? personURL : null
             };
 
-            foreach (var url in starWarsPerson.films ?? Enumerable.Empty<string>())
+            foreach (var url in starWarsPerson.films.OrEmptyIfNull())
                 personItem.Films.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsPerson.species ?? Enumerable.Empty<string>())
+            foreach (var url in starWarsPerson.species.OrEmptyIfNull())
                 personItem.Species.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsPerson.starships ?? Enumerable.Empty<string>())
+            foreach (var url in starWarsPerson.starships.OrEmptyIfNull())
                 personItem.Starships.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsPerson.vehicles ?? Enumerable.Empty<string>())
+            foreach (var url in starWarsPerson.vehicles.OrEmptyIfNull())
                 personItem.Vehicles.Add(GetIdFromURL(url));
 
             return personItem;

@@ -16,7 +16,7 @@ namespace SpaceStationAPI.DataLayer
 
     public class RestWorker : IRestWorker
     {
-        private static readonly HttpClient httpClient = new HttpClient();
+        private static readonly HttpClient httpClient = new();
 
         public async Task<T> CallService<T>(Uri wsURL, HttpVerb httpVerb = HttpVerb.Get, object data = null, NameValueCollection headerData = null) where T : BaseResponse, new()
         {

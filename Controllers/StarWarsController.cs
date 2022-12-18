@@ -24,7 +24,7 @@ namespace SpaceStationAPI.Controllers
             var film = await _starWarsLogic.GetFilms(id);
             var resultCode = (int)(film?.StatusCode ?? HttpStatusCode.InternalServerError);
 
-            return await Task.FromResult<IActionResult>(StatusCode(resultCode, film)); ;
+            return await Task.FromResult<IActionResult>(StatusCode(resultCode, film));
         }
 
         [HttpGet]
@@ -34,7 +34,7 @@ namespace SpaceStationAPI.Controllers
             var films = await _starWarsLogic.SearchFilms(searchTerm);
             var resultCode = (int)(films?.StatusCode ?? HttpStatusCode.InternalServerError);
 
-            return await Task.FromResult<IActionResult>(StatusCode(resultCode, films)); ;
+            return await Task.FromResult<IActionResult>(StatusCode(resultCode, films));
         }
 
         [HttpGet]
@@ -44,7 +44,7 @@ namespace SpaceStationAPI.Controllers
             var person = await _starWarsLogic.GetPerson(id);
             var resultCode = (int)(person?.StatusCode ?? HttpStatusCode.InternalServerError);
 
-            return await Task.FromResult<IActionResult>(StatusCode(resultCode, person)); ;
+            return await Task.FromResult<IActionResult>(StatusCode(resultCode, person));
         }
 
         [HttpGet]
@@ -54,7 +54,7 @@ namespace SpaceStationAPI.Controllers
             var people = await _starWarsLogic.SearchPeople(searchTerm);
             var resultCode = (int)(people?.StatusCode ?? HttpStatusCode.InternalServerError);
 
-            return await Task.FromResult<IActionResult>(StatusCode(resultCode, people)); ;
+            return await Task.FromResult<IActionResult>(StatusCode(resultCode, people));
         }
     }
 }
