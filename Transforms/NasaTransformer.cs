@@ -1,4 +1,5 @@
-﻿using SpaceStationAPI.Models.Domain;
+﻿using SpaceStationAPI.Extensions;
+using SpaceStationAPI.Models.Domain;
 using SpaceStationAPI.Models.View;
 
 namespace SpaceStationAPI.Transforms
@@ -10,8 +11,8 @@ namespace SpaceStationAPI.Transforms
             var result = new AstroPictureView
             {
                 Description = astroPicture.explanation,
-                Url = Uri.TryCreate(astroPicture.url, UriKind.Absolute, out var thisURL) ? thisURL : null,
-                HDurl = Uri.TryCreate(astroPicture.hdurl, UriKind.Absolute, out var thisHDurl) ? thisHDurl : null,
+                Url = astroPicture.url.ToUriOrNull(),
+                HDurl = astroPicture.hdurl.ToUriOrNull(),
                 Title = astroPicture.title,
                 IsErrorResponse = astroPicture.IsErrorResponse,
                 ErrorMessage = astroPicture.ErrorMessage,
@@ -37,7 +38,7 @@ namespace SpaceStationAPI.Transforms
                 { 
                     Id = photo.id, 
                     MarsSol = photo.sol, 
-                    ImageURL = Uri.TryCreate(photo.img_src, UriKind.Absolute, out var thisURL) ? thisURL : null,
+                    ImageURL = photo.img_src.ToUriOrNull(),
                     EarthDate = DateTime.TryParse(photo.earth_date, out var theDate) ? theDate : DateTime.UtcNow,
                     CameraName = photo.camera.name, 
                     RoverName = photo.rover.name,

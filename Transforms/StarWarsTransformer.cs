@@ -32,7 +32,7 @@ namespace SpaceStationAPI.Transforms
                 StatusCode = starWarsFilms.StatusCode,
             };
 
-            foreach(var item in starWarsFilms.results.OrEmptyIfNull())
+            foreach(var item in starWarsFilms.results.EmptyIfNull())
                 filmView.StarWarsFilms.Add(GetFilmItem(item));
 
             return filmView;
@@ -64,7 +64,7 @@ namespace SpaceStationAPI.Transforms
                 StatusCode = starWarsPeople.StatusCode
             };
 
-            foreach (var item in starWarsPeople.results.OrEmptyIfNull())
+            foreach (var item in starWarsPeople.results.EmptyIfNull())
                 peopleView.StarWarsPeople.Add(GetPersonItem(item));
 
             return peopleView;
@@ -94,22 +94,22 @@ namespace SpaceStationAPI.Transforms
                 Producer = starWarsFilm.producer,
                 ReleaseDate = DateTime.TryParse(starWarsFilm.release_date, out var dateRelease) ? dateRelease : null,
                 Title = starWarsFilm.title,
-                Url = Uri.TryCreate(starWarsFilm.url, UriKind.Absolute, out var filmURL) ? filmURL : null
+                Url = starWarsFilm.url.ToUriOrNull()
             };
 
-            foreach (var url in starWarsFilm.characters.OrEmptyIfNull())
+            foreach (var url in starWarsFilm.characters.EmptyIfNull())
                 filmItem.Characters.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsFilm.planets.OrEmptyIfNull())
+            foreach (var url in starWarsFilm.planets.EmptyIfNull())
                 filmItem.Planets.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsFilm.species.OrEmptyIfNull())
+            foreach (var url in starWarsFilm.species.EmptyIfNull())
                 filmItem.Species.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsFilm.starships.OrEmptyIfNull())
+            foreach (var url in starWarsFilm.starships.EmptyIfNull())
                 filmItem.Starships.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsFilm.vehicles.OrEmptyIfNull())
+            foreach (var url in starWarsFilm.vehicles.EmptyIfNull())
                 filmItem.Vehicles.Add(GetIdFromURL(url));
 
             return filmItem;
@@ -124,26 +124,26 @@ namespace SpaceStationAPI.Transforms
                 Gender = starWarsPerson.gender,
                 BirthYear = starWarsPerson.birth_year,
                 HomeWorldId = GetIdFromURL(starWarsPerson.homeworld),
-                Height_cm = double.TryParse(starWarsPerson.height, out var personHeight) ? personHeight : 0,
-                Mass_kg = double.TryParse(starWarsPerson.mass, out var personMass) ? personMass : 0,
+                Height_cm = starWarsPerson.height.ToDoubleOrZero(),
+                Mass_kg = starWarsPerson.mass.ToDoubleOrZero(),
                 HairColor = starWarsPerson.hair_color,
                 SkinColor = starWarsPerson.skin_color,
                 EyeColor = starWarsPerson.eye_color,
                 Created = starWarsPerson.created,
                 Edited = starWarsPerson.edited,
-                Url = Uri.TryCreate(starWarsPerson.url, UriKind.Absolute, out var personURL) ? personURL : null
+                Url = starWarsPerson.url.ToUriOrNull()
             };
 
-            foreach (var url in starWarsPerson.films.OrEmptyIfNull())
+            foreach (var url in starWarsPerson.films.EmptyIfNull())
                 personItem.Films.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsPerson.species.OrEmptyIfNull())
+            foreach (var url in starWarsPerson.species.EmptyIfNull())
                 personItem.Species.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsPerson.starships.OrEmptyIfNull())
+            foreach (var url in starWarsPerson.starships.EmptyIfNull())
                 personItem.Starships.Add(GetIdFromURL(url));
 
-            foreach (var url in starWarsPerson.vehicles.OrEmptyIfNull())
+            foreach (var url in starWarsPerson.vehicles.EmptyIfNull())
                 personItem.Vehicles.Add(GetIdFromURL(url));
 
             return personItem;
