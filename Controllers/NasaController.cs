@@ -26,7 +26,7 @@ namespace SpaceStationAPI.Controllers
             var picture = await _nasaLogic.GetAstronomyPictureURL(pictureDate);
             var resultCode = (int)(picture?.StatusCode ?? HttpStatusCode.InternalServerError);
 
-            return await Task.FromResult<IActionResult>(StatusCode(resultCode, picture));
+            return StatusCode(resultCode, picture);
         }
 
         [HttpGet]
@@ -37,7 +37,7 @@ namespace SpaceStationAPI.Controllers
             var neo = await _nasaLogic.GetNearEarthObject(id);
             var resultCode= (int)(neo?.StatusCode ?? HttpStatusCode.InternalServerError);
 
-            return await Task.FromResult<IActionResult>(StatusCode(resultCode, neo));
+            return StatusCode(resultCode, neo);
         }
 
         [HttpGet]
@@ -48,7 +48,7 @@ namespace SpaceStationAPI.Controllers
             var browse = await _nasaLogic.BrowseNearEarthObjects(pageNumber, pageSize);
             var resultCode = (int)(browse?.StatusCode ?? HttpStatusCode.InternalServerError);
 
-            return await Task.FromResult<IActionResult>(StatusCode(resultCode, browse));
+            return StatusCode(resultCode, browse);
         }
 
         [HttpGet]
@@ -59,7 +59,7 @@ namespace SpaceStationAPI.Controllers
             var photo = await _nasaLogic.GetMarsRoverPhotos(earthDate);
             var resultCode = (int)(photo?.StatusCode ?? HttpStatusCode.InternalServerError);
 
-            return await Task.FromResult<IActionResult>(StatusCode(resultCode, photo));
+            return StatusCode(resultCode, photo);
         }
     }
 }
